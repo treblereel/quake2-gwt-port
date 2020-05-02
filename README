@@ -1,5 +1,19 @@
-Google's HTML5 port of Bytonic Software's Java port of Id Software's Quake II
+Google's J2CL/HTML5 port of Bytonic Software's Java port of Id Software's Quake II
 
-To install and run: http://http://code.google.com/p/quake2-gwt-port/wiki/BuildingAndRunning
-Eclipse setup: http://http://code.google.com/p/quake2-gwt-port/wiki/EclipseSetup
+1) run com.googlecode.gwtquake.tools.Installer from the server module
+2) copy baseq2 from war to server/src/main/webapp/
+3) gwt-nio isn't merged yet, so you have to clone and install it locally from https://github.com/treblereel/gwt-nio
+4) run mvn clean package
+5) deploy to wildfly
 
+known issues:
+
+*    build tested only in openjdk version "1.8.0_252"
+*    it's not possible to join multiplayer game if server behide the NAT (maybe just my issue)
+*    mouse key bindings work not properly
+*    client wodnload all resources on any map change
+*    minor sound issues
+*    poor code quality (original code has been generated from C )
+*    it's not possible to set server address as param
+
+Enjoy and file the bugs :)

@@ -1,0 +1,115 @@
+.add-button {
+    border-radius: 24px !important;
+    height: 45px !important;
+    width: 120px;
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 10;
+}
+
+.header-bar {
+    width: 55%;
+    height: 50px;
+    background-color: #FFFFFF;
+    position: absolute;
+    top: 20px;
+    left: calc(50% - 25%);
+    border-bottom: 1px solid #b7b7b7;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.todo-list {
+    position: absolute;
+    width: 55%;
+    height: calc(100vh - 60px);
+    left: calc(50% - 25%);
+    background-color: #FFFFFF;
+    top: 70px;
+}
+
+.header-search {
+    top: 0px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.due-date {
+    color: #6a6a6a !important;
+    margin-top: 10px !important;
+}
+
+.attachments-count {
+    z-index: 1;
+    position: absolute;
+    top: 4px;
+    right: 33px;
+    height: 20px;
+    line-height: 15px;
+}
+
+.items-count {
+    position: absolute;
+    right: 32px;
+}
+
+.attachments-panel {
+    width: 100%;
+    background-color: #ececec;
+    padding: 10px;
+    border-radius: 3px;
+}
+
+.theme-selector {
+    width: 24px;
+    height: 24px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 3px;
+}
+
+.task-modal .modal-header{
+    background-color: #efefef;
+}
+
+.task-modal .modal-footer{
+    border-top: 1px solid #efefef;
+}
+
+.task-modal .modal-body{
+    overflow-y: auto;
+}
+
+@media only screen and (max-width: 992px) {
+    .task-modal .modal-body{
+        max-height: 350px;
+    }
+}
+
+
+@media only screen and (min-width: 992px) {
+    .task-modal .modal-body{
+        max-height: calc(100vh - 235px);
+    }
+}
+
+.task-modal .modal-content .modal-body{
+    padding-top: 35px;
+}
+
+
+@media screen and (max-width: 1200px){
+    section.content{
+        padding-bottom: 46px;
+    }
+}
+
+section.content{
+    min-height: 870px;
+}
+
+.menu-flow{
+    height: calc(100vh - 70px);
+    overflow-y: auto;
+}

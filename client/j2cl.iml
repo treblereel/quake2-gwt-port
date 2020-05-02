@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+  <component name="CheckStyle-IDEA-Module">
+    <option name="configuration">
+      <map />
+    </option>
+  </component>
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
+    <output url="file://$MODULE_DIR$/target/classes" />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
+    <content url="file://$MODULE_DIR$/../j2cl">
+      <sourceFolder url="file://$MODULE_DIR$/../j2cl/src/main/java" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="client" />
+    <orderEntry type="module" module-name="shared" />
+    <orderEntry type="library" name="Maven: org.dominokit:domino-ui:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.dominokit:domino-ui-shared:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.gwtproject.core:gwt-core:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.gwtproject.timer:gwt-timer:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: com.google.elemental2:elemental2-dom:sources:1.0.0-RC1" level="project" />
+    <orderEntry type="library" name="Maven: org.jboss.elemento:elemento-core:1.0.0-rc3" level="project" />
+    <orderEntry type="library" name="Maven: com.google.elemental2:elemental2-webstorage:1.0.0-RC1" level="project" />
+    <orderEntry type="library" name="Maven: org.gwtproject.safehtml:gwt-safehtml:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.gwtproject.i18n:gwt-datetimeformat:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.gwtproject.i18n:gwt-cldr:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.gwtproject.i18n:gwt-cldr:sources:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.gwtproject.i18n:gwt-i18n:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.gwtproject.i18n:gwt-numberformat:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: com.google.elemental2:elemental2-svg:1.0.0-RC1" level="project" />
+    <orderEntry type="library" name="Maven: com.google.jsinterop:base:1.0.0-RC1" level="project" />
+    <orderEntry type="library" name="Maven: com.google.elemental2:elemental2-core:1.0.0-RC1" level="project" />
+    <orderEntry type="library" name="Maven: com.google.elemental2:elemental2-dom:1.0.0-RC1" level="project" />
+    <orderEntry type="library" name="Maven: com.google.elemental2:elemental2-promise:1.0.0-RC1" level="project" />
+    <orderEntry type="library" name="Maven: org.gwtproject:editors:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.gwtproject.event:gwt-event:HEAD-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.gwtproject.event:gwt-event:sources:HEAD-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: com.vertispan.jsinterop:base:1.0.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: com.vertispan.j2cl:gwt-internal-annotations:0.4-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: com.vertispan.j2cl:gwttestcase-emul:0.3-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: com.vertispan.j2cl:junit-emul:0.3-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: com.vertispan.j2cl:junit-emul:sources:0.3-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: com.google.jsinterop:jsinterop-annotations:HEAD-SNAPSHOT" level="project" />
+  </component>
+</module>
