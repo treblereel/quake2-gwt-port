@@ -1,5 +1,0 @@
-<module>
-  <inherits name="com.google.gwt.user.User"/>
-  <inherits name="com.google.gwt.html5.HTML5"/>
-  <inherits name='com.googlecode.gwtgl.binding'/>
-</module>
