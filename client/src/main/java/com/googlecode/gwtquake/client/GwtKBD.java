@@ -30,9 +30,6 @@ import elemental2.dom.KeyboardEvent;
 import elemental2.dom.MouseEvent;
 import elemental2.dom.WheelEvent;
 import jsinterop.base.Js;
-import org.gwtproject.dom.client.Style;
-import org.gwtproject.dom.style.shared.Cursor;
-import org.gwtproject.event.dom.client.KeyCodes;
 
 public class GwtKBD extends KBD {
 
@@ -335,7 +332,7 @@ public class GwtKBD extends KBD {
 
     private void stopCapturingMouse() {
         captureMove = false;
-        GwtQuake.canvas.style.cursor = Cursor.DEFAULT.name();
+        GwtQuake.canvas.style.cursor = "default";
     }
 
     private boolean startCapturingMouse(MouseEvent nevt) {
