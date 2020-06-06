@@ -22,30 +22,23 @@
     <dependency>
       <groupId>com.google.elemental2</groupId>
       <artifactId>elemental2-dom</artifactId>
-      <version>1.0.0</version>
+      <version>${com.google.elemental2.version}</version>
     </dependency>
     <dependency>
       <groupId>com.google.elemental2</groupId>
       <artifactId>elemental2-webstorage</artifactId>
-      <version>1.0.0</version>
+      <version>${com.google.elemental2.version}</version>
     </dependency>
     <dependency>
       <groupId>com.google.elemental2</groupId>
       <artifactId>elemental2-webgl</artifactId>
-      <version>1.0.0</version>
+      <version>${com.google.elemental2.version}</version>
     </dependency>
     <dependency>
       <groupId>com.google.elemental2</groupId>
       <artifactId>elemental2-media</artifactId>
-      <version>1.0.0</version>
+      <version>${com.google.elemental2.version}</version>
     </dependency>
-    <dependency>
-      <groupId>com.google.jsinterop</groupId>
-      <artifactId>base</artifactId>
-      <version>1.0.0</version>
-      <scope>provided</scope>
-    </dependency>
-
     <dependency>
       <groupId>org.gwtproject.event</groupId>
       <artifactId>gwt-event</artifactId>
@@ -56,17 +49,17 @@
     <dependency>
       <groupId>org.gwtproject.core</groupId>
       <artifactId>gwt-core</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>${org.gwtproject.version}</version>
     </dependency>
     <dependency>
       <groupId>org.gwtproject.timer</groupId>
       <artifactId>gwt-timer</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>${org.gwtproject.version}</version>
     </dependency>
     <dependency>
       <groupId>org.gwtproject.xhr</groupId>
       <artifactId>gwt-xhr</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>${org.gwtproject.version}</version>
     </dependency>
     <dependency>
       <groupId>org.treblereel.gwt.quake2</groupId>
@@ -114,11 +107,6 @@
         </executions>
         <configuration>
           <compilationLevel>ADVANCED</compilationLevel>
-          <entrypoint>org.dominokit.samples.App</entrypoint>
-          <defines>
-            <quake2.serverAddress>127.0.0.1</quake2.serverAddress>
-            <locale>en_US</locale>
-          </defines>
           <!-- workaround for how closure generates sourcemaps, and how chrome interprets them. not needed in firefox -->
           <initialScriptFilename>${project.artifactId}.js</initialScriptFilename>
         </configuration>
