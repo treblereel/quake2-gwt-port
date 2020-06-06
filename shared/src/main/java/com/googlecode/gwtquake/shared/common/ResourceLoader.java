@@ -23,7 +23,7 @@ import java.nio.ByteBuffer;
 public class ResourceLoader {
 
 	public interface Callback {
-		public void onSuccess(ByteBuffer result);
+		void onSuccess(ByteBuffer result);
 	}
 	
 	public interface Impl {

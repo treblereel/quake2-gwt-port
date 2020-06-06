@@ -9,6 +9,8 @@
     <packaging>pom</packaging>
 
     <properties>
+        <server.addr>192.168.0.1</server.addr>
+
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <j2cl.maven.plugin.version>0.15-SNAPSHOT</j2cl.maven.plugin.version>

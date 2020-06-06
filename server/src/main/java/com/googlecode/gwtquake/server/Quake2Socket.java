@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.InetAddress;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.Startup;
 import javax.inject.Inject;
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
@@ -21,7 +20,6 @@ import com.googlecode.gwtquake.shared.util.Lib;
  * @author Dmitrii Tikhomirov
  * Created by treblereel 5/24/20
  */
-@Startup
 @ServerEndpoint(value = "/net")
 public class Quake2Socket {
 
@@ -30,6 +28,7 @@ public class Quake2Socket {
 
     @PostConstruct
     public void init(){
+
     }
 
     @OnMessage

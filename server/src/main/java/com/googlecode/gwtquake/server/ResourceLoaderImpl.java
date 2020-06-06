@@ -22,19 +22,25 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.net.URL;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+
+import javax.servlet.ServletContext;
 
 import com.googlecode.gwtquake.shared.common.Com;
 import com.googlecode.gwtquake.shared.common.Constants;
 import com.googlecode.gwtquake.shared.common.ResourceLoader;
-import org.apache.commons.io.FileUtils;
 
 public class ResourceLoaderImpl implements ResourceLoader.Impl {
 
     protected static final Object LOAD_LOCK = new Object();
     ArrayList<Pending> pending = new ArrayList<>();
+
+    private ServletContext servletContext;
+
+    public ResourceLoaderImpl(ServletContext servletContext) {
+        this.servletContext = servletContext;
+    }
 
     public void loadResourceAsync(String path,
                                   final ResourceLoader.Callback callback) {
@@ -99,45 +105,24 @@ public class ResourceLoaderImpl implements ResourceLoader.Impl {
         return buf;
     }
 
-    private static int FileLength(String filename) {
-        String netpath;
+    private int FileLength(String filename) {
+        String path;
 
         // check a file in the directory tree
-        netpath = Constants.BASEDIRNAME + '/' + filename;
+        path = Constants.BASEDIRNAME + '/' + filename;
 
-        String serverUrl = "http://127.0.0.1:8080/quake2/";
+        File file = new File(servletContext.getRealPath(path));
 
-        System.out.println("FileLength " + filename + " " + netpath);
-
-        File file = new File(netpath);
-
-        try {
-            FileUtils.copyURLToFile(new URL(serverUrl + netpath), file, 1000, 1000);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new Error(e);
-        }
-
-        //File file = new File(netpath);
         if (!file.canRead()) {
             return -1;
         }
-
-        System.out.println("FindFile: " + netpath + '\n');
-
-        Com.DPrintf("FindFile: " + netpath + '\n');
-
         return (int) file.length();
     }
 
-    private static RandomAccessFile FOpenFile(String filename) throws IOException {
-        System.out.println("FOpenFile " + filename + " " + Constants.BASEDIRNAME + '/' + filename);
-        String netpath;
-        File file = null;
+    private RandomAccessFile FOpenFile(String filename) throws IOException {
+        String path = Constants.BASEDIRNAME + '/' + filename;
 
-        netpath = Constants.BASEDIRNAME + '/' + filename;
-
-        file = new File(netpath);
+        File file = new File(servletContext.getRealPath(path));
         if (!file.canRead()) {
             return null;
         }

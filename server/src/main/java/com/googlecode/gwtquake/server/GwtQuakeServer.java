@@ -5,9 +5,9 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.ejb.Asynchronous;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.servlet.ServletContext;
 import javax.websocket.Session;
 
 import com.googlecode.gwtquake.shared.common.Compatibility;
@@ -30,19 +30,19 @@ public class GwtQuakeServer {
     @Inject
     private QuakeServerWrapper server;
 
+    @Inject
+    private ServletContext servletContext;
+
     @PostConstruct
     public void init() {
         System.out.println("GwtQuakeServer init");
 
-
         Compatibility.impl = new CompatibilityImpl();
-        ResourceLoader.impl = new ResourceLoaderImpl();
+        ResourceLoader.impl = new ResourceLoaderImpl(servletContext);
 
         NET.socketFactory = serverWebSocketFactory;
         NET.Config(true);
-        //quake2Socket.setServerWebSocket(serverWebSocketFactory);
         NET.Init();
-        //System.out.println("NET " + NET.ip_sockets[Constants.NS_SERVER]);
 
         System.out.println("startServer");
         server.startServer();
