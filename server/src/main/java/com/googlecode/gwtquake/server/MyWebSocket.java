@@ -5,9 +5,6 @@ import java.util.LinkedList;
 
 import javax.websocket.Session;
 
-import com.googlecode.gwtquake.shared.common.Constants;
-import com.googlecode.gwtquake.shared.sys.NET;
-
 import static com.googlecode.gwtquake.server.ServerWebSocketImpl.*;
 
 /**
