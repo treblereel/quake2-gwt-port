@@ -58,12 +58,12 @@ import com.googlecode.gwtquake.shared.game.Commands;
 import com.googlecode.gwtquake.shared.game.ConsoleVariable;
 import com.googlecode.gwtquake.shared.render.Model;
 import com.googlecode.gwtquake.shared.sound.Sound;
+import com.googlecode.gwtquake.shared.sys.IN;
 import com.googlecode.gwtquake.shared.sys.Sys;
 import com.googlecode.gwtquake.shared.sys.Timer;
 import com.googlecode.gwtquake.shared.util.Lib;
 import com.googlecode.gwtquake.shared.util.Math3D;
 import com.googlecode.gwtquake.shared.util.QuakeFile;
-import elemental2.dom.DomGlobal;
 
 public final class Menu {
 
@@ -793,9 +793,10 @@ public final class Menu {
     }
 
     static void KeyCursorDrawFunc(menuframework_s menu) {
-        if (bind_grab)
-          re.DrawString(menu.x, menu.y + menu.cursor * 9, "=");
-        else
+        if (bind_grab) {
+            IN.mouse_active = true;
+            re.DrawString(menu.x, menu.y + menu.cursor * 9, "=");
+        } else
           re.DrawChar(menu.x, menu.y + menu.cursor * 9, 12
               + ((int) (Timer.Milliseconds() / 250) & 1));
     }
@@ -1193,6 +1194,7 @@ public final class Menu {
     };
 
     static String Keys_MenuKey_f(int key) {
+        //!IN.mouse_active
         menuaction_s item = (menuaction_s) Menu_ItemAtCursor(s_keys_menu);
 
         if (bind_grab) {
@@ -1210,6 +1212,7 @@ public final class Menu {
             Menu_SetStatusBar(s_keys_menu,
                     "enter to change, backspace to clear");
             bind_grab = false;
+            IN.mouse_active = false;
             return menu_out_sound;
         }
 
