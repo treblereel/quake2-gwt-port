@@ -1,8 +1,6 @@
 package com.googlecode.gwtquake.server;
 
-import javax.ejb.Asynchronous;
-import javax.ejb.Stateless;
-import javax.enterprise.context.Dependent;
+import javax.enterprise.context.ApplicationScoped;
 
 import com.googlecode.gwtquake.shared.server.QuakeServer;
 
@@ -10,15 +8,14 @@ import com.googlecode.gwtquake.shared.server.QuakeServer;
  * @author Dmitrii Tikhomirov
  * Created by treblereel 6/4/20
  */
-@Asynchronous
-@Stateless
+@ApplicationScoped
 public class QuakeServerWrapper {
 
     private QuakeServer server = new QuakeServer();
 
-    @Asynchronous
     public void startServer() {
-        server.run(new String[]{});
+        Thread thread = new Thread(() -> server.run(new String[]{}));
+        thread.start();
     }
 
     public void setRun(boolean b) {

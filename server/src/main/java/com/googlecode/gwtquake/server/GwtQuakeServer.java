@@ -5,15 +5,12 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.ejb.Asynchronous;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.websocket.Session;
 
 import com.googlecode.gwtquake.shared.common.Compatibility;
-import com.googlecode.gwtquake.shared.common.Constants;
 import com.googlecode.gwtquake.shared.common.ResourceLoader;
-import com.googlecode.gwtquake.shared.server.QuakeServer;
 import com.googlecode.gwtquake.shared.sys.NET;
 
 /**
