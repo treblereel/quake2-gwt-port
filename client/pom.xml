@@ -40,25 +40,8 @@
       <version>${com.google.elemental2.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.gwtproject.event</groupId>
-      <artifactId>gwt-event</artifactId>
-      <version>HEAD-SNAPSHOT</version>
-      <scope>source</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.gwtproject.core</groupId>
-      <artifactId>gwt-core</artifactId>
-      <version>${org.gwtproject.version}</version>
-    </dependency>
-    <dependency>
       <groupId>org.gwtproject.timer</groupId>
       <artifactId>gwt-timer</artifactId>
-      <version>${org.gwtproject.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.gwtproject.xhr</groupId>
-      <artifactId>gwt-xhr</artifactId>
       <version>${org.gwtproject.version}</version>
     </dependency>
     <dependency>

@@ -25,10 +25,10 @@ import com.googlecode.gwtquake.shared.common.Com;
 import com.googlecode.gwtquake.shared.common.ResourceLoader;
 import elemental2.core.JsDate;
 import elemental2.dom.DomGlobal;
+import elemental2.dom.Event;
+import elemental2.dom.XMLHttpRequest;
 import org.gwtproject.nio.TypedArrayHelper;
 import org.gwtproject.timer.client.Timer;
-import org.gwtproject.xhr.client.ReadyStateChangeHandler;
-import org.gwtproject.xhr.client.XMLHttpRequest;
 
 public class GwtResourceLoaderImpl implements ResourceLoader.Impl {
 
@@ -40,30 +40,28 @@ public class GwtResourceLoaderImpl implements ResourceLoader.Impl {
     private ArrayList<ResponseHandler> readyList = new ArrayList<>();
 
     public void loadResourceAsync(final String path, final ResourceLoader.Callback callback) {
-        XMLHttpRequest req = XMLHttpRequest.create();
-
-        final Exception e = new Exception();
+        XMLHttpRequest req = new XMLHttpRequest();
         final int mySequenceNumber = freeSequenceNumber++;
-
-        req.setOnReadyStateChange(new ReadyStateChangeHandler() {
+        req.onreadystatechange = new XMLHttpRequest.OnreadystatechangeFn() {
             boolean receivingMsg;
-
-            public void onReadyStateChange(final XMLHttpRequest xhr) {
-                if (xhr.getReadyState() == 3 && !receivingMsg) {
+            @Override
+            public Object onInvoke(Event p0) {
+                XMLHttpRequest xhr = req;
+                if (xhr.readyState == 3 && !receivingMsg) {
                     Com.Printf("Receiving #" + mySequenceNumber + ": " + path + "\n");
                     receivingMsg = true;
-                } else if (xhr.getReadyState() == 4) {
+                } else if (xhr.readyState == 4) {
                     if (mySequenceNumber < ignoreSequenceNumbersBelow) {
                         Com.Printf("Ignoring outdated response #" + mySequenceNumber + ": " + path + "\n");
                     } else {
                         String response;
-                        if (xhr.getStatus() != 200) {
+                        if (xhr.status != 200) {
                             Com.Printf("Failed to load file #" + mySequenceNumber + ": " + path + " status: " +
-                                               xhr.getStatus() + "/" + xhr.getStatusText() + "\n");
-                            ResourceLoader.fail(new IOException("status = " + xhr.getStatus()));
+                                               xhr.status + "/" + xhr.statusText + "\n");
+                            ResourceLoader.fail(new IOException("status = " + xhr.status));
                             response = null;
                         } else {
-                            response = xhr.getResponseText();
+                            response = xhr.responseText;
                             Com.Printf("Received response #" + mySequenceNumber + ": " + path + "\r");
                         }
                         readyList.add(0, new ResponseHandler(mySequenceNumber, callback, response));
@@ -72,15 +70,15 @@ public class GwtResourceLoaderImpl implements ResourceLoader.Impl {
                         }
                     }
                 }
+                return null;
             }
-        });
+        };
 
         String href = DomGlobal.location.href;
-        DomGlobal.console.log("href " + href);
 
         Com.Printf("Requesting: " + path + "\n");
         req.overrideMimeType("text/plain; charset=x-user-defined");
-        req.open("GET", href + "baseq2/" + path);
+        req.open("GET", href + "baseq2/" + path, true);
         req.send();
     }
 
