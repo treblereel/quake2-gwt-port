@@ -2407,7 +2407,33 @@ public final class Menu {
             ConsoleVariables.SetValue("rate", rate_tbl[s_player_rate_box.curvalue]);
     }
 
-    static void ModelCallback(Object unused) {
+    static void ModelCallback() {
+        if (!entityModelLoading) {
+            entityModelLoading = true;
+            String scratch = "players/" + s_pmi[s_player_model_box.curvalue].directory
+                    + "/tris.md2";
+
+            re.RegisterModel(scratch, new AsyncCallback<Model>() {
+                public void onSuccess(Model response) {
+                    entity.model = response;
+                    entityModelLoading = false;
+                    // TODO(jgw): Signal to someone that they need to redraw?
+                }
+
+                public void onFailure(Throwable e) {
+                    // TODO(jgw): does anyone care if it fails?
+                }
+            });
+            scratch = "players/"
+                    + s_pmi[s_player_model_box.curvalue].directory
+                    + "/"
+                    + s_pmi[s_player_model_box.curvalue].skindisplaynames[s_player_skin_box.curvalue]
+                    + ".pcx";
+
+            entity.skin = re.RegisterSkin(scratch);
+        }
+
+
         s_player_skin_box.itemnames = s_pmi[s_player_model_box.curvalue].skindisplaynames;
         s_player_skin_box.curvalue = 0;
     }
@@ -2681,7 +2707,7 @@ public final class Menu {
         s_player_model_box.y = 70;
         s_player_model_box.callback = new mcallback() {
             public void execute(Object o) {
-                ModelCallback(o);
+                ModelCallback();
             }
         };
         s_player_model_box.cursor_offset = -48;
@@ -2781,21 +2807,22 @@ public final class Menu {
 //            entity.clear();
 
             if (!entityModelLoading) {
-              entityModelLoading = true;
-              scratch = "players/" + s_pmi[s_player_model_box.curvalue].directory
-                  + "/tris.md2";
-              re.RegisterModel(scratch, new AsyncCallback<Model>() {
-                public void onSuccess(Model response) {
-                  entity.model = response;
-                  // TODO(jgw): Signal to someone that they need to redraw?
-                }
+                entityModelLoading = true;
+                scratch = "players/" + s_pmi[s_player_model_box.curvalue].directory
+                        + "/tris.md2";
+                re.RegisterModel(scratch, new AsyncCallback<Model>() {
+                    public void onSuccess(Model response) {
+                        entity.model = response;
+                        entityModelLoading = false;
+                        // TODO(jgw): Signal to someone that they need to redraw?
+                    }
 
-                public void onFailure(Throwable e) {
-                  // TODO(jgw): does anyone care if it fails?
-                }
-              });
+                    public void onFailure(Throwable e) {
+                        // TODO(jgw): does anyone care if it fails?
+                    }
+                });
             }
-
+                            }
             scratch = "players/"
                     + s_pmi[s_player_model_box.curvalue].directory
                     + "/"
@@ -2838,7 +2865,7 @@ public final class Menu {
                     + "_i.pcx";
 
             re.DrawPic(s_player_config_menu.x - 40, refdef.y, scratch);
-        }
+
     }
 
     static String PlayerConfig_MenuKey(int key) {
