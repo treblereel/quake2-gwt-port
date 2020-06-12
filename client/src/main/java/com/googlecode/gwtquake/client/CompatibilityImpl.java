@@ -60,7 +60,7 @@ public class CompatibilityImpl implements Compatibility.Impl {
 	}
 
 	private static String getServerAddress() {
-		return "ws://94.112.128.228:8080/quake2/net";
+		return "ws://127.0.0.1:8080/quake2/net";
 	}
 
 	public void printStackTrace(Throwable e) {
