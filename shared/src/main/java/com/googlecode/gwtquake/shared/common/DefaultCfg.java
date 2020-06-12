@@ -137,6 +137,7 @@ public class DefaultCfg {
     "alias d1 \"killserver; demomap q2demo1.dm2 ; set nextserver d1\"\n" +
 //    "alias newgame \" wait ; killserver ; maxclients 1 ; deathmatch 0 ; map demo1\"\n" +
     "alias newgame \" killserver ; maxclients 1 ; deathmatch 0 ; map *ntro.cin+demo1\"\n" +
-    "alias dedicated_start \"map demo1\"\n";
+    //"alias dedicated_start \"map q2dm1\"\n";
+    "alias dedicated_start \"exec server.cfg\"\n";
 
 }
