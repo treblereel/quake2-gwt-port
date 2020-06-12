@@ -121,8 +121,9 @@ public class Unpak {
 
   private static void convertFile(String filename, FileChannel inChannel,
       int len, Writer imageSizes) throws IOException {
-    System.out.println(filename);
-
+    if("maps.lst".equals(filename)){
+      return;
+    }
     Converter converter = Converter.get(filename);
     String destName = converter == null ? filename : 
     		replaceExtension(filename, converter.getOutExt());
