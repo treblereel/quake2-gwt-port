@@ -27,10 +27,10 @@ public class Installer {
   public static void main(String args[]) throws Throwable {
     Downloader.main(args);
     if (args.length > 0 &&  args[0].equals("hires") && !new File("raw", "baseq2").exists()) {
-        Downloader hirezTextureDl = new Downloader("http://www-personal.umich.edu/~jimw/q2/Quake2_tga_textures/q2_textures.zip");
+        Downloader hirezTextureDl = new Downloader("http://www-personal.umich.edu/~jimw/q2/Quake2_tga_textures/","q2_textures.zip");
         hirezTextureDl.setHiresPak(true);
         hirezTextureDl.run();
-        Downloader hirezMdlDl = new Downloader("http://www-personal.umich.edu/~jimw/q2/aq2_install/models.zip");
+        Downloader hirezMdlDl = new Downloader("http://www-personal.umich.edu/~jimw/q2/aq2_install/","models.zip");
         hirezMdlDl.setHiresPak(true);
         hirezMdlDl.run();
     }

@@ -205,7 +205,6 @@ public final class QuakeFileSystem {
 //            } else {
                 // check a file in the directory tree
                 netpath = search.filename + '/' + filename;
-
                 File file = new File(netpath);
                 if (!file.canRead())
                     continue;
@@ -298,7 +297,7 @@ public final class QuakeFileSystem {
                 return new RandomAccessFile(file, "r");
 //            }
         }
-        //Com.DPrintf ("FindFile: can't find " + filename + '\n');
+        Com.DPrintf ("FindFile: can't find " + filename + '\n');
         return null;
     }
 
