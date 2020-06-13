@@ -25,14 +25,14 @@ public class GwtQuakeServer {
     private ServerWebSocketFactoryImpl serverWebSocketFactory = new ServerWebSocketFactoryImpl();
 
     @Inject
-    private QuakeServerWrapper server;
+    QuakeServerWrapper server;
 
     @PostConstruct
     public void init() {
         System.out.println("GwtQuakeServer init");
 
 
-        Compatibility.impl = new CompatibilityImpl();
+        //Compatibility.impl = new CompatibilityImpl();
         ResourceLoader.impl = new ResourceLoaderImpl();
 
         NET.socketFactory = serverWebSocketFactory;
@@ -52,7 +52,7 @@ public class GwtQuakeServer {
     }
 
     @PreDestroy
-    private void onDestroy() {
+    void onDestroy() {
         System.out.println("onDestroy");
         NET.isRunning = false;
         server.setRun(false);
