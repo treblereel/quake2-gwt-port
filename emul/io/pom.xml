@@ -20,9 +20,9 @@
       <version>${com.google.elemental2.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.gwtproject.nio</groupId>
+      <groupId>org.treblereel.gwt.nio</groupId>
       <artifactId>gwt-nio</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>1.0</version>
     </dependency>
   </dependencies>
 
