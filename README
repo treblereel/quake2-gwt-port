@@ -2,16 +2,15 @@ Google's J2CL/HTML5 port of Bytonic Software's Java port of Id Software's Quake 
 
 1) run com.googlecode.gwtquake.tools.Installer from the server module
 2) copy baseq2 from war to server/src/main/webapp/
-3) gwt-nio isn't merged yet, so you have to clone and install it locally from https://github.com/treblereel/gwt-nio
-4) for multiplayer you need to set ws server addr at client/src/main/java/com/googlecode/gwtquake/client/CompatibilityImpl.java:62
+3) for multiplayer you need to set ws server addr at client/src/main/java/com/googlecode/gwtquake/client/CompatibilityImpl.java:62
    copy files from config folder to ~/.jake2
-5) run mvn clean package
-6) deploy to wildfly
+4) run mvn clean package
+5) deploy to wildfly
 
 known issues:
 
 *    build tested only in openjdk version "1.8.0_252"
-*    it's not possible to join multiplayer game if server behide the NAT (maybe just my issue)
+*    it's not possible to join multiplayer game if server behind the NAT (maybe just my issue)
 *    mouse key bindings work not properly
 *    minor sound issues
 *    poor code quality (original code has been generated from C )
