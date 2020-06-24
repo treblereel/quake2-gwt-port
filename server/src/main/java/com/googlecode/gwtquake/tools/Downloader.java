@@ -58,7 +58,7 @@ public class Downloader implements Runnable {
     }};
 
     public Downloader() throws InterruptedException, MalformedURLException {
-        //Compatibility.impl = new CompatibilityImpl();
+        Compatibility.impl = new CompatibilityImpl();
         if (new File("raw", "baseq2").exists()) {
             System.out.println("raw/baseq2 already exists; no need to download");
             return;
