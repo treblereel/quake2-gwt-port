@@ -24,7 +24,9 @@
 package com.googlecode.gwtquake.shared.game;
 
 
+import java.io.File;
 import java.util.*;
+import java.util.function.Function;
 
 import com.googlecode.gwtquake.shared.common.*;
 import com.googlecode.gwtquake.shared.game.monsters.MonsterPlayer;
@@ -35,6 +37,9 @@ import com.googlecode.gwtquake.shared.util.Lib;
  * Cmd
  */
 public final class Commands {
+
+    public static Function<String, byte[]> serverFileLoader;
+
     static ExecutableCommand List_f = new ExecutableCommand() {
         public void execute() {
             CommandFunction cmd = Commands.cmd_functions;
@@ -57,7 +62,13 @@ public final class Commands {
             }
 
             byte[] f = null;
-            f = QuakeFileSystem.LoadFile(Commands.Argv(1));
+
+            if(serverFileLoader != null ) {
+                f = serverFileLoader.apply(Commands.Argv(1));
+            } else {
+                f = QuakeFileSystem.LoadFile(Commands.Argv(1));
+            }
+
             if (f == null) {
                 Com.Printf("couldn't exec " + Commands.Argv(1) + "\n");
                 return;

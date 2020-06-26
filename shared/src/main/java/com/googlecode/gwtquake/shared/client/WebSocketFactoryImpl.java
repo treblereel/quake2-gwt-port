@@ -38,13 +38,14 @@ public class WebSocketFactoryImpl implements QuakeSocketFactory {
 
 class GwtWebSocketImpl implements QuakeSocket {
 
-    private final String addr = "ws://127.0.0.1:8080/quake2/net";
+    private String addr = "ws://127.0.0.1:8080/quake2/net";
 
     private WebSocket socket;
     private boolean connected;
     private LinkedList<String> msgQueue = new LinkedList<>();
 
     public GwtWebSocketImpl(String addr) {
+        this.addr = addr;
         System.out.println("Creating GwtWebSocketImpl(" + addr + ")");
     }
 

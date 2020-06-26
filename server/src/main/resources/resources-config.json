@@ -1,0 +1,7 @@
+{
+  "resources": [
+    {
+      "pattern": "../client/target/client-1.0-SNAPSHOT/client.js"
+    }
+  ]
+}

@@ -107,8 +107,6 @@ public class ResourceLoaderImpl implements ResourceLoader.Impl {
 
         String serverUrl = "http://127.0.0.1:8080/quake2/";
 
-        System.out.println("FileLength " + filename + " " + netpath);
-
         File file = new File(netpath);
 
         try {

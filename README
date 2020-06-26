@@ -1,11 +1,19 @@
 Google's J2CL/HTML5 port of Bytonic Software's Java port of Id Software's Quake II
 
+Pre-requisites:
+
+* java 1.8 (java.nio emulation atm works only with java 1.8, otherwise there're errors like : error: package exists in another module: java.base)
+* maven 3.6
+* lame installed
+* vorbis-tools installed
+* tested on linux
+
 1) run com.googlecode.gwtquake.tools.Installer from the server module
-2) copy baseq2 from war to server/src/main/webapp/
+2) copy baseq2 from war dir to server/src/main/resources/META-INF/resources/
 3) for multiplayer you need to set ws server addr at client/src/main/java/com/googlecode/gwtquake/client/CompatibilityImpl.java:62
-   copy files from config folder to ~/.jake2
 4) run mvn clean package
-5) deploy to wildfly
+5) java -jar server/target/quake2-runner.jar
+6) http://0.0.0.0:8080/quake2/
 
 known issues:
 

@@ -137,7 +137,6 @@ public class GwtKBD extends KBD {
                 }
                 mouseEvent.preventDefault();
             } else if ("mousedown".equals(type)) {
-                DomGlobal.console.log("mousedown " + mouseEvent.button);
                 boolean ignoreClick = false;
                 if (mouseEvent.button == BUTTON_RIGHT) {
                     stopCapturingMouse();

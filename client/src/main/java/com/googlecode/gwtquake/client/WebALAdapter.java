@@ -26,6 +26,7 @@ import java.util.Map;
 import com.googlecode.gwtquake.shared.sound.ALAdapter;
 import elemental2.dom.DomGlobal;
 import elemental2.dom.HTMLAudioElement;
+import elemental2.dom.HTMLSourceElement;
 import jsinterop.base.Js;
 
 /**
@@ -433,11 +434,16 @@ public class WebALAdapter extends ALAdapter {
         protected HTML5AudioElement(String name) {
             audio = (HTMLAudioElement)DomGlobal.document.createElement("audio");
             DomGlobal.document.body.appendChild(audio);
-            DomGlobal.console.log("name " + name);
-            audio.src = name;
+            //audio.src = name;
             audio.muted = true;
             audio.preload = "auto";
-            audio.setAttribute("preload", "auto");
+
+            HTMLSourceElement source = (HTMLSourceElement)DomGlobal.document.createElement("source");
+            source.src = name;
+            source.type="audio/mp3";
+            audio.appendChild(source);
+
+            //audio.setAttribute("preload", "auto");
         }
 
         public static HTML5AudioElement create(String name) {
