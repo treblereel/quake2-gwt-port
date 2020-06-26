@@ -1,20 +1,15 @@
 package com.googlecode.gwtquake.server;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.servlet.ServletContext;
 import javax.websocket.Session;
 
 import com.googlecode.gwtquake.shared.common.Compatibility;
@@ -30,11 +25,9 @@ import org.apache.commons.io.IOUtils;
 @ApplicationScoped
 public class GwtQuakeServer {
 
-    private final Map<Session, MyWebSocket> handler = new HashMap<>();
+    private final Map<Session, MyWebSocket> handler = new ConcurrentHashMap<>();
     @Inject
     QuakeServerWrapper server;
-    @Inject
-    ServletContext servletContext;
     private ServerWebSocketFactoryImpl serverWebSocketFactory = new ServerWebSocketFactoryImpl();
 
     @PostConstruct
