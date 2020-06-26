@@ -101,7 +101,6 @@
       </exclusions>
     </dependency>
 
-
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-junit5</artifactId>
@@ -112,11 +111,6 @@
       <artifactId>rest-assured</artifactId>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-container-image-docker</artifactId>
-    </dependency>
-
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
@@ -156,19 +150,12 @@
         </executions>
       </plugin>
 
-
-
-
-
-
-
       <plugin>
         <groupId>io.quarkus</groupId>
         <artifactId>quarkus-maven-plugin</artifactId>
         <version>${quarkus-plugin.version}</version>
         <configuration>
-          <quarkus.native.additional-build-args>-H:IncludeResources=/**</quarkus.native.additional-build-args>
-          <additionalBuildArg>-H:IncludeResources=/**</additionalBuildArg>
+          <additionalBuildArgs>-H:IncludeResources=/**</additionalBuildArgs>
         </configuration>
         <executions>
           <execution>
@@ -218,15 +205,6 @@
           <name>native</name>
         </property>
       </activation>
-<!--      <dependencies>
-        <dependency>
-          <groupId>${project.groupId}</groupId>
-          <artifactId>client</artifactId>
-          <version>${project.version}</version>
-          <type>war</type>
-          <scope>runtime</scope>
-        </dependency>
-      </dependencies>-->
       <build>
         <plugins>
           <plugin>
@@ -250,14 +228,8 @@
       </build>
       <properties>
         <quarkus.package.type>native</quarkus.package.type>
-<!--
-        <quarkus.native.additional-build-args>&#45;&#45;initialize-at-run-time=com.googlecode.gwtquake.shared.client.Menu\,com.googlecode.gwtquake.shared.render.Particles\,com.googlecode.gwtquake.shared.common.CM  -H:ResourceConfigurationFiles=resources-config.json</quarkus.native.additional-build-args>
--->
         <quarkus.native.additional-build-args>--initialize-at-run-time=com.googlecode.gwtquake.shared.client.Menu\,com.googlecode.gwtquake.shared.render.Particles\,com.googlecode.gwtquake.shared.common.CM -H:IncludeResources=~/.bashrc</quarkus.native.additional-build-args>
         <quarkus.native.additional-build-args>--initialize-at-run-time=com.googlecode.gwtquake.shared.client.Menu\,com.googlecode.gwtquake.shared.</quarkus.native.additional-build-args>
-<!--
-        <quarkus.native.additional-build-args>&#45;&#45;initialize-at-run-time=com.googlecode.gwtquake.shared.render.Particles</quarkus.native.additional-build-args>
--->
       </properties>
     </profile>
   </profiles>
