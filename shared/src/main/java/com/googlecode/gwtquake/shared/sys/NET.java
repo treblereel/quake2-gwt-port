@@ -339,10 +339,11 @@ public final class NET {
         QuakeSocket newsocket = null;
         try {
             if (ip == null || ip.length() == 0 || ip.equals("localhost")) {
+                String serverUrl = Compatibility.impl.getOriginatingServerAddress();
                 if (port == Constants.PORT_ANY) {
-                    newsocket = socketFactory.bind(null, 0);
+                    newsocket = socketFactory.bind(serverUrl, 0);
                 } else {
-                    newsocket = socketFactory.bind(null, port);
+                    newsocket = socketFactory.bind(serverUrl, port);
                 }
             } else {
                 newsocket = socketFactory.bind(ip, port);
