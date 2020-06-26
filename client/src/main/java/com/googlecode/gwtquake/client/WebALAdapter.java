@@ -434,7 +434,6 @@ public class WebALAdapter extends ALAdapter {
         protected HTML5AudioElement(String name) {
             audio = (HTMLAudioElement)DomGlobal.document.createElement("audio");
             DomGlobal.document.body.appendChild(audio);
-            DomGlobal.console.log("name " + name);
             //audio.src = name;
             audio.muted = true;
             audio.preload = "auto";
