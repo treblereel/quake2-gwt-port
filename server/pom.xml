@@ -21,11 +21,11 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <quarkus-plugin.version>1.5.2.Final</quarkus-plugin.version>
+    <quarkus-plugin.version>1.8.1.Final</quarkus-plugin.version>
     <quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
     <quarkus-http.version>3.0.11.Final</quarkus-http.version>
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-    <quarkus.platform.version>1.5.2.Final</quarkus.platform.version>
+    <quarkus.platform.version>1.8.1.Final</quarkus.platform.version>
     <surefire-plugin.version>2.22.1</surefire-plugin.version>
   </properties>
 
@@ -62,7 +62,7 @@
     </dependency>
 
     <!-- workaround  -->
-    <dependency>
+<!--    <dependency>
       <groupId>io.quarkus.http</groupId>
       <artifactId>quarkus-http-vertx-backend</artifactId>
       <version>${quarkus-http.version}</version>
@@ -99,7 +99,7 @@
           <artifactId>jboss-annotations-api_1.2_spec</artifactId>
         </exclusion>
       </exclusions>
-    </dependency>
+    </dependency>-->
 
     <dependency>
       <groupId>io.quarkus</groupId>
