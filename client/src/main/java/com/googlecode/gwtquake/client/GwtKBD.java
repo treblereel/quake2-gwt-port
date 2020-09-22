@@ -73,13 +73,11 @@ public class GwtKBD extends KBD {
 
     @Override
     public void Init() {
-        //DomGlobal.window.addEventListener("keydown", evt -> onPreviewNativeEvent(evt, "keydown"));
-        //DomGlobal.window.addEventListener("keyup", evt -> onPreviewNativeEvent(evt, "keyup"));
-        //DomGlobal.window.addEventListener("mousemove", evt -> onPreviewNativeEvent(evt, "mousemove"));
-        //DomGlobal.window.addEventListener("mousedown", evt -> onPreviewNativeEvent(evt, "mousedown"));
-        //DomGlobal.window.addEventListener("mouseup", evt -> onPreviewNativeEvent(evt, "mouseup"));
-        //DomGlobal.window.addEventListener("mousewheel", evt -> onPreviewNativeEvent(evt, "mousewheel"));
         DomGlobal.window.addEventListener("contextmenu", evt -> onPreviewNativeEvent(evt, "contextmenu"));
+        windowHalfX = getWidth() / 2;
+        X = 0;
+        windowHalfY = getHeight() / 2;
+        Y = 0;
     }
 
     HTMLCanvasElement canvasElement;
@@ -89,16 +87,14 @@ public class GwtKBD extends KBD {
         DomGlobal.window.addEventListener("keydown", evt -> onPreviewNativeEvent(evt, "keydown"));
         DomGlobal.window.addEventListener("keyup", evt -> onPreviewNativeEvent(evt, "keyup"));
 
-        //canvasElement.addEventListener("keydown", evt -> onPreviewNativeEvent(evt, "keydown"));
-        //canvasElement.addEventListener("keyup", evt -> onPreviewNativeEvent(evt, "keyup"));
-        //canvasElement.addEventListener("mousemove", evt -> onPreviewNativeEvent(evt, "mousemove"));
-
-        canvasElement.addEventListener("mousemove", evt -> onPreviewNativeEvent(evt, "mousemove"), true);
+        canvasElement.addEventListener("mousemove", evt -> onPreviewNativeEvent(evt, "mousemove"), false);
         canvasElement.addEventListener("mousedown", evt -> onPreviewNativeEvent(evt, "mousedown"));
         canvasElement.addEventListener("mouseup", evt -> onPreviewNativeEvent(evt, "mouseup"));
         canvasElement.addEventListener("mousewheel", evt -> onPreviewNativeEvent(evt, "mousewheel"));
         canvasElement.addEventListener("contextmenu", evt -> onPreviewNativeEvent(evt, "contextmenu"));
     }
+
+    double X,Y;
 
     public void onPreviewNativeEvent(Event event, String type) {
         if (event instanceof KeyboardEvent) {
@@ -120,19 +116,28 @@ public class GwtKBD extends KBD {
         } else if (event instanceof MouseEvent) {
             MouseEvent mouseEvent = (MouseEvent) event;
             if ("mousemove".equals(type)) {
-                double cmx = mouseEvent.clientX;  //getMousePosX(canvasElement, mouseEvent);
-                double cmy = mouseEvent.clientY; //getMousePosY(canvasElement, mouseEvent);
+
+                double cmx = mouseEvent.clientX;
+                double cmy;
 
                 double cx = Globals.viddef.width / 2;
                 normalX = (cmx - cx) / cx;
 
                 if (captureMove) {
                     if (!AUTOROTATE) {
-                        mx += (cmx - lastCmx) * SCALE;
-                        my += (cmy - lastCmy) * SCALE;
+                        if(GwtQuake.isPointerLockActivated) {
+                            mx += getMovement(event, "movementX") * SCALE;
+                            my += getMovement(event, "movementY") * SCALE;
+                        } else {
+                            cmx = mouseEvent.clientX;
+                            cmy = mouseEvent.clientY;
 
-                        lastCmx = cmx;
-                        lastCmy = cmy;
+                            mx += (cmx - lastCmx) * SCALE;
+                            my += (cmy - lastCmy) * SCALE;
+
+                            lastCmx = cmx;
+                            lastCmy = cmy;
+                        }
                     }
                 }
                 mouseEvent.preventDefault();
@@ -174,16 +179,19 @@ public class GwtKBD extends KBD {
         }
     }
 
-    private double getMousePosX(HTMLCanvasElement canvas, MouseEvent evt) {
-        DOMRect rect = canvas.getBoundingClientRect();
-        return (evt.clientX - rect.left);
+    private double getMovement(Event event, String movementX) {
+        return Js.asDouble(Js.asPropertyMap(event).get(movementX));
     }
 
-    private double getMousePosY(HTMLCanvasElement canvas, MouseEvent evt) {
-        DOMRect rect = canvas.getBoundingClientRect();
-        return ((evt.clientY - rect.top));
+    double windowHalfX, windowHalfY;
+
+    public double getWidth() {
+        return DomGlobal.window.innerWidth * 0.8;
     }
 
+    public double getHeight() {
+        return DomGlobal.window.innerHeight;
+    }
 
     private int XLateKey(int key) {
         switch (key) {
