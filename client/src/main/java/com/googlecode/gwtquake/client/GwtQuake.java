@@ -28,23 +28,18 @@ import com.googlecode.gwtquake.shared.common.ConsoleVariables;
 import com.googlecode.gwtquake.shared.common.Globals;
 import com.googlecode.gwtquake.shared.common.QuakeCommon;
 import com.googlecode.gwtquake.shared.common.ResourceLoader;
-import com.googlecode.gwtquake.shared.sound.DummyDriver;
 import com.googlecode.gwtquake.shared.sound.Sound;
 import com.googlecode.gwtquake.shared.sys.NET;
 import elemental2.core.JsDate;
 import elemental2.dom.CSSProperties;
 import elemental2.dom.CSSStyleDeclaration;
 import elemental2.dom.DomGlobal;
-import elemental2.dom.Event;
-import elemental2.dom.FrameRequestCallback;
 import elemental2.dom.HTMLBodyElement;
 import elemental2.dom.HTMLCanvasElement;
 import elemental2.dom.HTMLDivElement;
 import elemental2.dom.HTMLDocument;
 import elemental2.dom.HTMLElement;
 import elemental2.dom.HTMLVideoElement;
-import jsinterop.annotations.JsFunction;
-import jsinterop.annotations.JsPackage;
 import jsinterop.annotations.JsType;
 import jsinterop.base.Js;
 
@@ -52,7 +47,6 @@ public class GwtQuake implements EntryPoint {
 
     private static final int INTER_FRAME_DELAY = 1;
 
-    ;
     private static final int LOADING_DELAY = 500;
     private static final java.lang.String NO_WEBGL_MESSAGE =
             "<div style='padding:20px;font-family: sans-serif;'>" +
@@ -69,6 +63,8 @@ public class GwtQuake implements EntryPoint {
     int w;
     int h;
     private double startTime = -1;
+
+    public static boolean isPointerLockActivated = false;
 
     static BrowserType getBrowserType() {
         return BrowserType.CHROME;
@@ -123,13 +119,10 @@ public class GwtQuake implements EntryPoint {
 
             ((GwtKBD)Globals.re.getKeyboardHandler()).Init(canvas);
 
-
             Sound.impl = new GwtSound();
             DomGlobal.console.log("GwtSound done");
             NET.socketFactory = new WebSocketFactoryImpl();
             DomGlobal.console.log("NET done");
-
-
 
             // Flags.
             QuakeCommon.Init(new String[]{"GQuake"});
@@ -138,25 +131,25 @@ public class GwtQuake implements EntryPoint {
             // Enable stdout.
             Globals.nostdout = ConsoleVariables.Get("nostdout", "0", 0);
 
-            DomGlobal.window.onresize = new elemental2.dom.Window.OnresizeFn() {
-                @Override
-                public Object onInvoke(Event p0) {
-                    if (DomGlobal.window.innerWidth == w &&
-                            DomGlobal.window.innerHeight == h) {
-                        return null;
-                    }
-                    w = DomGlobal.window.innerWidth;
-                    h = DomGlobal.window.innerHeight;
-
-                    renderer.GLimp_SetMode(new Dimension(w, h), 0, false);
+            DomGlobal.window.onresize = p0 -> {
+                if (DomGlobal.window.innerWidth == w &&
+                        DomGlobal.window.innerHeight == h) {
                     return null;
                 }
+                w = DomGlobal.window.innerWidth;
+                h = DomGlobal.window.innerHeight;
+
+                renderer.GLimp_SetMode(new Dimension(w, h), 0, false);
+                return null;
             };
 
-/*            canvas.onclick = p0 -> {
-                Js.<WithRequestPointerLock>uncheckedCast(canvas).requestPointerLock();
-                return null;
-            };*/
+            if(Js.asPropertyMap(canvas).has("requestPointerLock")) {
+                canvas.onclick = p0 -> {
+                    Js.<WithRequestPointerLock>uncheckedCast(canvas).requestPointerLock();
+                    isPointerLockActivated = true;
+                    return null;
+                };
+            }
 
             startTime = JsDate.now();
             animate();
@@ -171,12 +164,9 @@ public class GwtQuake implements EntryPoint {
     }
 
     private void animate() {
-        DomGlobal.requestAnimationFrame(new FrameRequestCallback() {
-            @Override
-            public void onInvoke(double timestamp) {
-                render();
-                animate();
-            }
+        DomGlobal.requestAnimationFrame(timestamp -> {
+            render();
+            animate();
         });
     }
 
