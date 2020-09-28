@@ -149,7 +149,7 @@ public class Downloader implements Runnable {
             }
             ok = true;
         } catch (IOException e) {
-            System.out.println("Donwload Failed " + e);
+            System.out.println("Download Failed " + e);
         }
     }
 

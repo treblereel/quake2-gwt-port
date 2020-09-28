@@ -8,6 +8,4 @@ public class App implements EntryPoint {
     public void onModuleLoad() {
         new GwtQuake().onModuleLoad();
     }
-
-
 }

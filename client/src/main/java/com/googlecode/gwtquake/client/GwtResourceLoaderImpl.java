@@ -21,8 +21,11 @@ package com.googlecode.gwtquake.client;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.googlecode.gwtquake.shared.client.PlayerModel;
+import com.googlecode.gwtquake.shared.common.AsyncCallback;
 import com.googlecode.gwtquake.shared.common.Com;
 import com.googlecode.gwtquake.shared.common.ResourceLoader;
+import elemental2.core.JsArray;
 import elemental2.core.JsDate;
 import elemental2.dom.DomGlobal;
 import elemental2.dom.Event;
@@ -38,6 +41,7 @@ public class GwtResourceLoaderImpl implements ResourceLoader.Impl {
     private int ignoreSequenceNumbersBelow;
     private int currentSequenceNumber;
     private ArrayList<ResponseHandler> readyList = new ArrayList<>();
+    private Players players = new Players();
 
     public void loadResourceAsync(final String path, final ResourceLoader.Callback callback) {
         XMLHttpRequest req = new XMLHttpRequest();
@@ -80,6 +84,11 @@ public class GwtResourceLoaderImpl implements ResourceLoader.Impl {
         req.overrideMimeType("text/plain; charset=x-user-defined");
         req.open("GET", href + "baseq2/" + path, true);
         req.send();
+    }
+
+    @Override
+    public void playerModels(AsyncCallback<JsArray<PlayerModel>> onLoad) {
+        players.playerModels(onLoad);
     }
 
     public boolean pump() {

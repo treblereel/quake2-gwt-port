@@ -30,7 +30,7 @@ import com.googlecode.gwtquake.shared.util.Math3D;
 // ok!
 public class EntityType implements Cloneable{
 	//ptr
-	public Model model; // opaque type outside refresh
+	public com.googlecode.gwtquake.shared.render.Model model; // opaque type outside refresh
 	public float angles[] = { 0, 0, 0 };
 
 	/*
