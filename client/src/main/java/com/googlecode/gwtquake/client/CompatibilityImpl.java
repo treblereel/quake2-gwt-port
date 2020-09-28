@@ -23,6 +23,7 @@ package com.googlecode.gwtquake.client;
 import com.google.gwt.corp.compatibility.ConsolePrintStream;
 import com.google.gwt.corp.compatibility.Numbers;
 import com.googlecode.gwtquake.shared.common.Compatibility;
+import elemental2.dom.DomGlobal;
 
 public class CompatibilityImpl implements Compatibility.Impl {
 
@@ -60,7 +61,8 @@ public class CompatibilityImpl implements Compatibility.Impl {
 	}
 
 	private static String getServerAddress() {
-		return "ws://127.0.0.1:8080/quake2/net";
+		return "ws://" + DomGlobal.location.host + DomGlobal.location.pathname + "net";
+		//return "ws://127.0.0.1:8080/quake2/net";
 	}
 
 	public void printStackTrace(Throwable e) {

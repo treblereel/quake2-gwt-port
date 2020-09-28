@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
@@ -14,17 +15,17 @@ import javax.websocket.server.ServerEndpoint;
 import com.googlecode.gwtquake.shared.common.Constants;
 import com.googlecode.gwtquake.shared.sys.NET;
 import com.googlecode.gwtquake.shared.util.IpAddrGenerator;
-import com.googlecode.gwtquake.shared.util.Lib;
 
 /**
  * @author Dmitrii Tikhomirov
  * Created by treblereel 5/24/20
  */
-@ServerEndpoint(value = "/net")
+@ApplicationScoped
+@ServerEndpoint("/net")
 public class Quake2Socket {
 
     @Inject
-    private GwtQuakeServer server;
+    GwtQuakeServer server;
 
     @PostConstruct
     public void init(){

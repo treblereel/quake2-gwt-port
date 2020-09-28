@@ -10,11 +10,33 @@
   </parent>
 
   <artifactId>server</artifactId>
-  <packaging>war</packaging>
 
   <properties>
-    <jetty.version>9.2.11.v20150529</jetty.version>
+    <compiler-plugin.version>3.8.1</compiler-plugin.version>
+    <maven.compiler.parameters>true</maven.compiler.parameters>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <quarkus-plugin.version>1.8.1.Final</quarkus-plugin.version>
+    <quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
+    <quarkus-http.version>3.0.11.Final</quarkus-http.version>
+    <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
+    <quarkus.platform.version>1.8.1.Final</quarkus.platform.version>
+    <surefire-plugin.version>2.22.1</surefire-plugin.version>
   </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>${quarkus.platform.group-id}</groupId>
+        <artifactId>${quarkus.platform.artifact-id}</artifactId>
+        <version>${quarkus.platform.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <dependencies>
     <dependency>
@@ -24,25 +46,36 @@
     </dependency>
 
     <dependency>
-      <groupId>javax.websocket</groupId>
-      <artifactId>javax.websocket-api</artifactId>
-      <version>1.1</version>
-      <scope>provided</scope>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-resteasy</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-undertow</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-undertow-websockets</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-resteasy</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-resteasy-jackson</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>javax.enterprise</groupId>
-      <artifactId>cdi-api</artifactId>
-      <version>2.0</version>
-      <scope>provided</scope>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-junit5</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.jboss.spec.javax.ejb</groupId>
-      <artifactId>jboss-ejb-api_3.1_spec</artifactId>
-      <version>1.0.2.Final</version>
-      <scope>provided</scope>
+      <groupId>io.rest-assured</groupId>
+      <artifactId>rest-assured</artifactId>
+      <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
@@ -53,30 +86,64 @@
 
   <build>
     <finalName>quake2</finalName>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.eclipse.jetty</groupId>
-          <artifactId>jetty-maven-plugin</artifactId>
-          <configuration>
-            <scanIntervalSeconds>1</scanIntervalSeconds>
-            <webApp>
-              <extraClasspath>${basedir}/../shared/target/classes/</extraClasspath>
-            </webApp>
-            <contextXml>${basedir}/src/main/jettyconf/context.xml</contextXml>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.tomcat.maven</groupId>
-          <artifactId>tomcat7-maven-plugin</artifactId>
-          <configuration>
-            <addWarDependenciesInClassloader>false</addWarDependenciesInClassloader>
-            <path>/</path>
-            <uriEncoding>UTF-8</uriEncoding>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
+    <plugins>
+
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.1.0</version>
+        <executions>
+          <execution>
+            <id>copy-resources</id>
+            <!-- here the phase you need -->
+            <phase>validate</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${basedir}/src/main/resources/META-INF/resources/</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>../client/target/client-1.0-SNAPSHOT/</directory>
+                  <includes>
+                    <include>client.js</include>
+                  </includes>
+                  <filtering>true</filtering>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>io.quarkus</groupId>
+        <artifactId>quarkus-maven-plugin</artifactId>
+        <version>${quarkus-plugin.version}</version>
+        <configuration>
+          <additionalBuildArgs>-H:IncludeResources=/**</additionalBuildArgs>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>build</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${compiler-plugin.version}</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${surefire-plugin.version}</version>
+        <configuration>
+          <systemPropertyVariables>
+            <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+          </systemPropertyVariables>
+        </configuration>
+      </plugin>
+    </plugins>
   </build>
 
   <profiles>
@@ -95,39 +162,40 @@
         </dependency>
       </dependencies>
     </profile>
+
     <profile>
-      <id>env-dev</id>
+      <id>native</id>
       <activation>
         <property>
-          <name>env</name>
-          <value>dev</value>
+          <name>native</name>
         </property>
       </activation>
       <build>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <groupId>org.eclipse.jetty</groupId>
-              <artifactId>jetty-maven-plugin</artifactId>
-              <configuration>
-                <webApp>
-                  <resourceBases>
-                    <resourceBase>${basedir}/src/main/webapp</resourceBase>
-                    <resourceBase>${basedir}/../target/gwt/launcherDir/</resourceBase>
-                  </resourceBases>
-                </webApp>
-              </configuration>
-            </plugin>
-            <plugin>
-              <groupId>org.apache.tomcat.maven</groupId>
-              <artifactId>tomcat7-maven-plugin</artifactId>
-              <configuration>
-                <contextFile>${basedir}/src/main/tomcatconf/context.xml</contextFile>
-              </configuration>
-            </plugin>
-          </plugins>
-        </pluginManagement>
+        <plugins>
+          <plugin>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <version>${surefire-plugin.version}</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>integration-test</goal>
+                  <goal>verify</goal>
+                </goals>
+                <configuration>
+                  <systemPropertyVariables>
+                    <native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>
+                  </systemPropertyVariables>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
       </build>
+      <properties>
+        <quarkus.package.type>native</quarkus.package.type>
+        <quarkus.native.additional-build-args>--initialize-at-run-time=com.googlecode.gwtquake.shared.client.Menu\,com.googlecode.gwtquake.shared.render.Particles\,com.googlecode.gwtquake.shared.common.CM -H:IncludeResources=~/.bashrc</quarkus.native.additional-build-args>
+        <quarkus.native.additional-build-args>--initialize-at-run-time=com.googlecode.gwtquake.shared.client.Menu\,com.googlecode.gwtquake.shared.</quarkus.native.additional-build-args>
+      </properties>
     </profile>
   </profiles>
 </project>

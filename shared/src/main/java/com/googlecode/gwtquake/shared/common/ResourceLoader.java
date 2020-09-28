@@ -20,14 +20,18 @@ package com.googlecode.gwtquake.shared.common;
 
 import java.nio.ByteBuffer;
 
+import com.googlecode.gwtquake.shared.client.PlayerModel;
+import elemental2.core.JsArray;
+
 public class ResourceLoader {
 
 	public interface Callback {
-		public void onSuccess(ByteBuffer result);
+		void onSuccess(ByteBuffer result);
 	}
 	
 	public interface Impl {
 	    void loadResourceAsync(String path, Callback callback);
+		void playerModels(AsyncCallback<JsArray<PlayerModel>> onLoad);
 	    boolean pump();
 		void reset();
 	  }

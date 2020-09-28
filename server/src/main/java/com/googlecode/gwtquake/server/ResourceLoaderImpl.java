@@ -26,9 +26,12 @@ import java.net.URL;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
+import com.googlecode.gwtquake.shared.client.PlayerModel;
+import com.googlecode.gwtquake.shared.common.AsyncCallback;
 import com.googlecode.gwtquake.shared.common.Com;
 import com.googlecode.gwtquake.shared.common.Constants;
 import com.googlecode.gwtquake.shared.common.ResourceLoader;
+import elemental2.core.JsArray;
 import org.apache.commons.io.FileUtils;
 
 public class ResourceLoaderImpl implements ResourceLoader.Impl {
@@ -44,6 +47,12 @@ public class ResourceLoaderImpl implements ResourceLoader.Impl {
         p.callback = callback;
         p.path = path;
         pending.add(p);
+    }
+
+    //TODO load from server
+    @Override
+    public void playerModels(AsyncCallback<JsArray<PlayerModel>> onLoad) {
+
     }
 
     public boolean pump() {
@@ -106,8 +115,6 @@ public class ResourceLoaderImpl implements ResourceLoader.Impl {
         netpath = Constants.BASEDIRNAME + '/' + filename;
 
         String serverUrl = "http://127.0.0.1:8080/quake2/";
-
-        System.out.println("FileLength " + filename + " " + netpath);
 
         File file = new File(netpath);
 

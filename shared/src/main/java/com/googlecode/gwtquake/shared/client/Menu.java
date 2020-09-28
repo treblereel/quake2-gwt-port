@@ -2360,7 +2360,7 @@ public final class Menu {
 
     static menuaction_s s_player_download_action = new menuaction_s();
 
-    static class playermodelinfo_s {
+    public static class playermodelinfo_s {
 //        int nskins;
 
         String skindisplaynames[];
@@ -2379,15 +2379,7 @@ public final class Menu {
     };
 
     // TODO(jgw): This list should be provided by the server.
-    static playermodelinfo_s s_pmi[] = new playermodelinfo_s[] {
-      new playermodelinfo_s("Female", "female", new String[] { "athena",
-          "brianna", "cobalt", "doomgal", "ensign", "jezebel", "jungle",
-          "lotus", "stiletto", "venus", "voodoo" }),
-      new playermodelinfo_s("Male", "male", new String[] { "cipher",
-          "claymore", "flak", "grunt", "howitzer", "major", "nightops",
-          "pointman", "psycho", "rampage", "razor", "recon", "scout", "sniper",
-          "viper" })
-    };
+    public static playermodelinfo_s[] s_pmi;
 
     static String s_pmnames[] = new String[MAX_PLAYERMODELS];
 
@@ -2810,8 +2802,8 @@ public final class Menu {
                 entityModelLoading = true;
                 scratch = "players/" + s_pmi[s_player_model_box.curvalue].directory
                         + "/tris.md2";
-                re.RegisterModel(scratch, new AsyncCallback<Model>() {
-                    public void onSuccess(Model response) {
+                re.RegisterModel(scratch, new AsyncCallback<com.googlecode.gwtquake.shared.render.Model>() {
+                    public void onSuccess(com.googlecode.gwtquake.shared.render.Model response) {
                         entity.model = response;
                         entityModelLoading = false;
                         // TODO(jgw): Signal to someone that they need to redraw?

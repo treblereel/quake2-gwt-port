@@ -33,12 +33,9 @@ public class MyWebSocket {
             }
             outQueue.clear();
         }
-
-        System.out.println("onConnect");
     }
 
     public void onDisconnect() {
-        System.out.println("onDisconnect");
     }
 
     // If you know this: Please add a comment about the required Jetty version at the top

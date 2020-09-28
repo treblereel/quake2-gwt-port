@@ -41,7 +41,7 @@ import com.googlecode.gwtquake.shared.render.Model;
 import com.googlecode.gwtquake.shared.sound.Sound;
 import com.googlecode.gwtquake.shared.sys.Sys;
 import com.googlecode.gwtquake.shared.util.Lib;
-
+import elemental2.dom.DomGlobal;
 
 /**
  * CL_parse
@@ -424,8 +424,8 @@ public class ClientParser {
             model_filename = "players/" + model_name + "/tris.md2";
 
             if (ci.model == null) {
-                model_name = "male";
-                model_filename = "players/male/tris.md2";
+                //model_name = "male";
+                //model_filename = "players/male/tris.md2";
             }
 
             // skin file
@@ -494,16 +494,15 @@ public class ClientParser {
           loadWeaponModel(ci, i, weapon_filenames[i]);
         }
 
-
         // must have loaded all data types to be valud
-        if (ci.skin == null || ci.icon == null || ci.model == null
+/*        if (ci.skin == null || ci.icon == null || ci.model == null
                 || ci.weaponmodel[0] == null) {
             ci.skin = null;
             ci.icon = null;
             ci.model = null;
             ci.weaponmodel[0] = null;
             return;
-        }
+        }*/
     }
 
     private static void loadWeaponModel(final ClientInfo ci, final int i, String weapon_filename) {

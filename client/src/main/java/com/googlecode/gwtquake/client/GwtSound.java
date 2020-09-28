@@ -255,6 +255,7 @@ public class GwtSound implements SoundImpl {
         if (sc != null) {
             s.cache = sc;
             if (namebuffer.endsWith(".wav")) {
+                //namebuffer += GwtQuake.getBrowserType() == BrowserType.SAFARI ? ".mp3" : ".ogg";
                 namebuffer += ".mp3";
             }
             Console.Print("Creating audio element " + namebuffer + "\r");
