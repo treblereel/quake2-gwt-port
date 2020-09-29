@@ -116,7 +116,6 @@ public class GwtKBD extends KBD {
         } else if (event instanceof MouseEvent) {
             MouseEvent mouseEvent = (MouseEvent) event;
             if ("mousemove".equals(type)) {
-
                 double cmx = mouseEvent.clientX;
                 double cmy;
 
@@ -143,9 +142,10 @@ public class GwtKBD extends KBD {
                 mouseEvent.preventDefault();
             } else if ("mousedown".equals(type)) {
                 boolean ignoreClick = false;
-                if (mouseEvent.button == BUTTON_RIGHT) {
-                    stopCapturingMouse();
-                } else if (mouseEvent.button == BUTTON_LEFT) {
+                //if (mouseEvent.button == BUTTON_RIGHT) {
+                    //stopCapturingMouse();
+                //} else
+                if (mouseEvent.button == BUTTON_LEFT) {
                     mouseDownTime = JsDate.now();
                     ignoreClick = startCapturingMouse(mouseEvent);
                 }
@@ -350,7 +350,7 @@ public class GwtKBD extends KBD {
         GwtQuake.canvas.style.setProperty("cursor", "none");
         lastCmx = (int) nevt.clientX;
         lastCmy = (int) nevt.clientY;
-        return true;
+        return (nevt.buttons & 1) != 1;
     }
 
     private static int translateMouseButton(MouseEvent evt) {
