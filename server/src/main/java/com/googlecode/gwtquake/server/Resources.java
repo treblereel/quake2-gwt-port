@@ -12,6 +12,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import io.quarkus.runtime.annotations.RegisterForReflection;
+
 /**
  * @author Dmitrii Tikhomirov
  * Created by treblereel 9/26/20
@@ -43,6 +45,7 @@ public class Resources {
         return Response.ok(models).build();
     }
 
+    @RegisterForReflection
     static class Model {
 
         private String name;
