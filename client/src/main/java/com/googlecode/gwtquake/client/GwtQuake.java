@@ -42,10 +42,11 @@ import elemental2.dom.HTMLBodyElement;
 import elemental2.dom.HTMLCanvasElement;
 import elemental2.dom.HTMLDivElement;
 import elemental2.dom.HTMLDocument;
-import elemental2.dom.HTMLElement;
 import elemental2.dom.HTMLVideoElement;
-import jsinterop.annotations.JsType;
 import jsinterop.base.Js;
+import org.treblereel.gwt.elemental2.pointerlock.PointerLockOptions;
+import org.treblereel.gwt.elemental2.pointerlock.PointerlockDocument;
+import org.treblereel.gwt.elemental2.pointerlock.PointerlockElement;
 
 public class GwtQuake implements EntryPoint {
 
@@ -81,7 +82,7 @@ public class GwtQuake implements EntryPoint {
             initCanvas();
             initializeDrivers();
             onResize();
-            requestPointerLock();
+            requestPointerLockAndFullscreen();
             loadPlayerModels();
         } catch (Exception e) {
             DomGlobal.console.error(e);
@@ -92,11 +93,33 @@ public class GwtQuake implements EntryPoint {
         }
     }
 
-    private void requestPointerLock() {
+    private void requestPointerLockAndFullscreen() {
         if (Js.asPropertyMap(canvas).has("requestPointerLock")) {
+
+            DomGlobal.document.addEventListener("pointerlockchange", evt -> {
+                if (PointerlockDocument.of(DomGlobal.document).pointerLockElement == canvas) {
+                    isPointerLockActivated = true;
+                } else {
+                    isPointerLockActivated = false;
+                }
+            }, false);
+
+            DomGlobal.document.addEventListener("fullscreenchange", evt -> {
+                if (DomGlobal.document.fullscreenElement == null) {
+                    PointerlockDocument.of(DomGlobal.document).exitPointerLock();
+                }
+            });
+
             canvas.onclick = p0 -> {
-                Js.<WithRequestPointerLock>uncheckedCast(canvas).requestPointerLock();
-                isPointerLockActivated = true;
+                canvas.requestFullscreen().then(p1 -> {
+                    PointerLockOptions options = PointerLockOptions.create();
+                    options.setUnadjustedMovement(true);
+
+                    PointerlockElement.of(canvas)
+                            .requestPointerLock(options);
+                    isPointerLockActivated = true;
+                    return null;
+                });
                 return null;
             };
         }
@@ -231,11 +254,5 @@ public class GwtQuake implements EntryPoint {
         CHROME,
         SAFARI,
         OTHER
-    }
-
-    @JsType(isNative = true)
-    public static class WithRequestPointerLock extends HTMLElement {
-
-        native void requestPointerLock();
     }
 }

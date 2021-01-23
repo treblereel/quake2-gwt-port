@@ -22,7 +22,6 @@ import com.googlecode.gwtquake.shared.sys.IN;
 import com.googlecode.gwtquake.shared.sys.KBD;
 import com.googlecode.gwtquake.shared.sys.Timer;
 import elemental2.core.JsDate;
-import elemental2.dom.DOMRect;
 import elemental2.dom.DomGlobal;
 import elemental2.dom.Event;
 import elemental2.dom.HTMLCanvasElement;
@@ -30,6 +29,7 @@ import elemental2.dom.KeyboardEvent;
 import elemental2.dom.MouseEvent;
 import elemental2.dom.WheelEvent;
 import jsinterop.base.Js;
+import org.treblereel.gwt.elemental2.pointerlock.PointerlockMouseEvent;
 
 public class GwtKBD extends KBD {
 
@@ -125,8 +125,8 @@ public class GwtKBD extends KBD {
                 if (captureMove) {
                     if (!AUTOROTATE) {
                         if(GwtQuake.isPointerLockActivated) {
-                            mx += getMovement(event, "movementX") * SCALE;
-                            my += getMovement(event, "movementY") * SCALE;
+                            mx += PointerlockMouseEvent.of(mouseEvent).movementX * SCALE;
+                            my += PointerlockMouseEvent.of(mouseEvent).movementY * SCALE;
                         } else {
                             cmx = mouseEvent.clientX;
                             cmy = mouseEvent.clientY;
@@ -177,10 +177,6 @@ public class GwtKBD extends KBD {
             event.preventDefault();
             event.stopPropagation();
         }
-    }
-
-    private double getMovement(Event event, String movementX) {
-        return Js.asDouble(Js.asPropertyMap(event).get(movementX));
     }
 
     double windowHalfX, windowHalfY;
