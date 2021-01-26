@@ -31,7 +31,6 @@ import elemental2.dom.DomGlobal;
 import elemental2.dom.Event;
 import elemental2.dom.XMLHttpRequest;
 import org.gwtproject.nio.TypedArrayHelper;
-import org.gwtproject.timer.client.Timer;
 
 public class GwtResourceLoaderImpl implements ResourceLoader.Impl {
 
@@ -101,32 +100,31 @@ public class GwtResourceLoaderImpl implements ResourceLoader.Impl {
     }
 
     private void processReadyList() {
-        new Timer() {
-            @Override
-            public void run() {
+        DomGlobal.setTimeout(p0 -> {
 
-                try {
+            try {
 
-                    for (int i = readyList.size() - 1; i >= 0; i--) {
-                        ResponseHandler handler = readyList.get(i);
-                        if (handler.sequenceNumber == currentSequenceNumber) {
-                            if (handler.response != null) {
-                                double t0 = JsDate.now();
-                                handler.callback.onSuccess(TypedArrayHelper.stringToByteBuffer(handler.response));
+                for (int i = readyList.size() - 1; i >= 0; i--) {
+                    ResponseHandler handler = readyList.get(i);
+                    if (handler.sequenceNumber == currentSequenceNumber) {
+                        if (handler.response != null) {
+                            double t0 = JsDate.now();
+                            handler.callback.onSuccess(TypedArrayHelper.stringToByteBuffer(handler.response));
 
-                                Com.Printf("Processed #" + currentSequenceNumber + " in " + (JsDate.now() - t0) / 1000.0 + "s\r");
-                            }
-                            readyList.remove(i);
-                            currentSequenceNumber++;
-                            processReadyList();
-                            return;
+                            Com.Printf("Processed #" + currentSequenceNumber + " in " + (JsDate.now() - t0) / 1000.0 + "s\r");
                         }
+                        readyList.remove(i);
+                        currentSequenceNumber++;
+                        processReadyList();
+                        return;
                     }
-                } catch (Exception e) {
-                    DomGlobal.console.error(e);
                 }
+            } catch (Exception e) {
+                DomGlobal.console.error(e);
             }
-        }.schedule(RECEIVED_WAIT_TIME);
+
+        }, RECEIVED_WAIT_TIME);
+
     }
 
     static class ResponseHandler {

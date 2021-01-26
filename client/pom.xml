@@ -40,11 +40,6 @@
       <version>${com.google.elemental2.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.gwtproject.timer</groupId>
-      <artifactId>gwt-timer</artifactId>
-      <version>${org.gwtproject.version}</version>
-    </dependency>
-    <dependency>
       <groupId>org.treblereel.gwt.elemental2</groupId>
       <artifactId>pointerlock</artifactId>
       <version>0.2</version>
