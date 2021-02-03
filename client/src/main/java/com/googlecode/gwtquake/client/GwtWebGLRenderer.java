@@ -36,7 +36,6 @@ import elemental2.dom.HTMLImageElement;
 import elemental2.dom.HTMLVideoElement;
 import elemental2.webgl.WebGLRenderingContext;
 import jsinterop.base.Js;
-import org.gwtproject.timer.client.Timer;
 
 import static elemental2.webgl.WebGLRenderingContext.LINEAR;
 import static elemental2.webgl.WebGLRenderingContext.LINEAR_MIPMAP_NEAREST;
@@ -354,48 +353,7 @@ public class GwtWebGLRenderer extends GlRenderer implements Renderer {
         return !video.ended;
     }
 
-    class ImageLoader extends Timer {
-
-        @Override
-        public void run() {
-            while (!ResourceLoader.Pump() && waitingForImages < MAX_IMAGE_REQUEST_COUNT && imageQueue.size() > 0) {
-                final Image image = imageQueue.remove(0);
-                final HTMLImageElement img = (HTMLImageElement) DomGlobal.document.createElement("img");
-
-                String picUrl = convertPicName(image.name, image.type);
-          /*    if (picUrl.endsWith("ggrat6_2.png")) {
-                picUrl = convertPicName("textures/tron_poster.jpg", 0);
-              }*/
-                img.src = picUrl;
-                img.style.display = "NONE";
-                DomGlobal.document.body.appendChild(img);
-
-                HTMLImageElement imageElement = (HTMLImageElement) DomGlobal.document.createElement("img");
-                DomGlobal.document.body.appendChild(imageElement);
-                imageElement.style.display = "NONE";
-                imageElement.src = picUrl;
-
-                imageElement.addEventListener("load", evt -> {
-                    imageElement.setAttribute("complete", true);
-                    waitingForImages(-1);
-                    loaded(image, imageElement);
-                });
-                imageElement.addEventListener("error", evt -> {
-                    imageElement.setAttribute("complete", true);
-                    GlState.gl.log("load errors for " + imageElement.src);
-                    waitingForImages(-1);
-                    GlState.gl.log("1 " + image);
-
-                    image.complete = true;
-
-                    GlState.gl.log("2");
-
-                });
-            }
-            if (imageQueue.size() > 0) {
-                schedule();
-            }
-        }
+    class ImageLoader {
 
         protected void waitingForImages(int i) {
             waitingForImages += i;
@@ -406,7 +364,44 @@ public class GwtWebGLRenderer extends GlRenderer implements Renderer {
         }
 
         public void schedule() {
-            schedule(IMAGE_CHECK_TIME);
+            DomGlobal.setTimeout(p0 -> {
+                while (!ResourceLoader.Pump() && waitingForImages < MAX_IMAGE_REQUEST_COUNT && imageQueue.size() > 0) {
+                    final Image image = imageQueue.remove(0);
+                    final HTMLImageElement img = (HTMLImageElement) DomGlobal.document.createElement("img");
+
+                    String picUrl = convertPicName(image.name, image.type);
+          /*    if (picUrl.endsWith("ggrat6_2.png")) {
+                picUrl = convertPicName("textures/tron_poster.jpg", 0);
+              }*/
+                    img.src = picUrl;
+                    img.style.display = "NONE";
+                    DomGlobal.document.body.appendChild(img);
+
+                    HTMLImageElement imageElement = (HTMLImageElement) DomGlobal.document.createElement("img");
+                    DomGlobal.document.body.appendChild(imageElement);
+                    imageElement.style.display = "NONE";
+                    imageElement.src = picUrl;
+
+                    imageElement.addEventListener("load", evt -> {
+                        imageElement.setAttribute("complete", true);
+                        waitingForImages(-1);
+                        loaded(image, imageElement);
+                    });
+                    imageElement.addEventListener("error", evt -> {
+                        imageElement.setAttribute("complete", true);
+                        GlState.gl.log("load errors for " + imageElement.src);
+                        waitingForImages(-1);
+                        GlState.gl.log("1 " + image);
+
+                        image.complete = true;
+
+                        GlState.gl.log("2");
+                    });
+                }
+                if (imageQueue.size() > 0) {
+                    schedule();
+                }
+            }, IMAGE_CHECK_TIME);
         }
     }
 }
