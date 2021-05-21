@@ -30,7 +30,6 @@ online demo: https://j2cl-quake.colinalworth.com/quake2/
 
 known issues:
 
-*    build tested only in openjdk version "1.8.0_252"
 *    minor sound issues
 *    poor code quality (original code has been generated from C )
 *    it's not possible to set server address as param
