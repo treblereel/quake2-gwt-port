@@ -3,7 +3,6 @@ package com.googlecode.gwtquake.server;
 import java.io.IOException;
 import java.net.InetAddress;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.websocket.OnClose;
@@ -21,15 +20,11 @@ import com.googlecode.gwtquake.shared.util.IpAddrGenerator;
  * Created by treblereel 5/24/20
  */
 @ApplicationScoped
-@ServerEndpoint("/net")
+@ServerEndpoint("/quake2/net")
 public class Quake2Socket {
 
     @Inject
     GwtQuakeServer server;
-
-    @PostConstruct
-    public void init(){
-    }
 
     @OnMessage
     public void onMessage(Session session, String msg) {

@@ -6,12 +6,12 @@ import com.googlecode.gwtquake.shared.client.PlayerModel;
 import com.googlecode.gwtquake.shared.common.AsyncCallback;
 import com.googlecode.gwtquake.shared.common.Com;
 import com.googlecode.gwtquake.shared.common.ResourceLoader;
+import elemental2.core.Global;
 import elemental2.core.JsArray;
 import elemental2.dom.Event;
 import elemental2.dom.XMLHttpRequest;
 import jsinterop.base.Js;
 import jsinterop.base.JsPropertyMap;
-import org.treblereel.gwt.quake2.JSON;
 
 /**
  * @author Dmitrii Tikhomirov
@@ -46,7 +46,7 @@ public class Players {
                         onLoad.onFailure(new IOException("status = " + xhr.status));
                     } else {
                         String response = xhr.responseText;
-                        Object temp = JSON.parse(response);
+                        Object temp = Global.JSON.parse(response);
                         models = new JsArray<>();
                         Js.asPropertyMap(temp).forEach(key -> {
                             JsPropertyMap model = Js.uncheckedCast(Js.asPropertyMap(temp).get(key));
